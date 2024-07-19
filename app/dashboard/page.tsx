@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { getServerSession } from "next-auth/next"
-import { authOptions } from '../api/auth/[...nextauth]/route'
+import { authOptions } from '../lib/auth'
 import { redirect } from 'next/navigation'
 import prisma from '@/prisma/client'
 
@@ -11,11 +11,10 @@ export default async function Dashboard() {
     redirect('/login')
   }
 
-  const INo = parseFloat(session.user?.labId!);
+  const INo = session.user?.labId!;
 
   const reports = await prisma.report.findMany({
-    where: { labId: INo
-    },
+    where: { labId: INo},
     
   });
 
